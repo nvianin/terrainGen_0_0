@@ -73,6 +73,7 @@ public:
 	ofShader fbm;
 	ofShader flow;
 	ofShader water_height;
+	ofShader velocity;
 
 	ofShader erode;
 	ofShader transpose;

@@ -2,11 +2,16 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
+	// LOAD SHADERS
+
 	fbm.load("shaders/generic.vert", "shaders/fbm.frag");
 	flow.load("shaders/generic.vert", "shaders/flow.frag");
 	water_height.load("shaders/generic.vert", "shaders/water_height.frag");
+	velocity.load("shaders/generic.vert", "shaders/velocity.frag");
 
 	printf("initialized shaders \n");
+
+	// INITIALIZE FBOs
 
 	undermap.allocate(ofGetWidth(), ofGetHeight());
 	undermap.begin();
@@ -53,6 +58,7 @@ void ofApp::update() {
 		fbm.load("shaders/generic.vert", "shaders/fbm.frag");
 		flow.load("shaders/generic.vert", "shaders/flow.frag");
 		water_height.load("shaders/generic.vert", "shaders/water_height.frag");
+		velocity.load("shaders/generic.vert", "shaders/velocity.frag");
 	}
 }
 
@@ -127,7 +133,27 @@ void ofApp::draw() {
 	water_height.end();
 	watermap.end();
 
-	watermap.draw(0,0);
+	/*watermap.draw(0,0);*/
+
+	velmap.begin();
+
+	velocity.begin();
+
+	velocity.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
+	velocity.setUniform1f("dt", dt);
+	velocity.setUniform1f("rain", rain);
+
+	velocity.setUniformTexture("heightmap", heightmap.getTexture(), 1);
+	velocity.setUniformTexture("flowmap", flowmap.getTexture(), 2);
+	velocity.setUniformTexture("velmap", velmap.getTexture(), 3);
+	velocity.setUniformTexture("watermap", watermap.getTexture(), 4);
+
+	ofDrawRectangle(0, 0, ofGetWidth(), ofGetHeight());
+	velocity.end();
+	
+	velmap.end();
+
+	velmap.draw(0, 0);
 
 	/*heightmap.draw(0, 0, ofGetWidth(), ofGetHeight());*/
 }
