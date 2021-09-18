@@ -51,13 +51,21 @@ void main() {
     water/=4;
     water*=1.; */
     
-    float flux_total_over_dt = (flux.x + flux.y + flux.z + flux.w)/dt;
-
-    float dh_l = height - (texture2DRect(heightmap, vec2(gl_FragCoord.x, gl_FragCoord.y)).r + texture2DRect(heightmap, vec2(gl_FragCoord.x, gl_FragCoord.y)).g);
+    float dh_l = height - (texture2DRect(heightmap, vec2(gl_FragCoord.x-1, gl_FragCoord.y)).r + texture2DRect(heightmap, vec2(gl_FragCoord.x-1, gl_FragCoord.y)).g);
+    float dh_u = height - (texture2DRect(heightmap, vec2(gl_FragCoord.x, gl_FragCoord.y+1)).r + texture2DRect(heightmap, vec2(gl_FragCoord.x, gl_FragCoord.y+1)).g);
+    float dh_r = height - (texture2DRect(heightmap, vec2(gl_FragCoord.x+1, gl_FragCoord.y)).r + texture2DRect(heightmap, vec2(gl_FragCoord.x+1, gl_FragCoord.y)).g);
+    float dh_d = height - (texture2DRect(heightmap, vec2(gl_FragCoord.x, gl_FragCoord.y-1)).r + texture2DRect(heightmap, vec2(gl_FragCoord.x, gl_FragCoord.y-1)).g);
+    
     float f_l = max(0, flux.x + dt * (9.8 * dh_l));
+    float f_u =max(0, flux.y + dt * (9.8 * dh_l));
+    float f_r =max(0, flux.z + dt * (9.8 * dh_l));
+    float f_d =max(0, flux.w + dt * (9.8 * dh_l));
+    
     float K = min(1, water / ((flux.x + flux.y + flux.z + flux.w) * dt));
    /*  outputColor = texture2DRect(heightmap, gl_FragCoord.xy);
     outputColor = vec4(flux.rgb, 1.); */
+
+    vec4 outputFlow = vec4(f_l, f_u,f_r,f_d);
 
     f_l *= K;
     outputColor = vec4(vec3(f_l, height, water), 1.);
