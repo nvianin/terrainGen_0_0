@@ -84,8 +84,6 @@ void ofApp::draw() {
 		heightmapInitialized = true;
 	}
 
-	// CALCULATE FLOWS
-
 	flowmap.begin();
 	flow.begin();
 

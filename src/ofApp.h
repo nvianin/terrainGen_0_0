@@ -44,9 +44,9 @@ public:
 	// R flux L
 	// G flux U
 	// B flux R
+	// A flux D
 	ofFbo flowmap;
 
-	// R flux D
 	// G velocity x
 	// B velocity y
 	ofFbo velmap;
