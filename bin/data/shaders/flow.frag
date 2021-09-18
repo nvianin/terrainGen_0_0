@@ -50,6 +50,8 @@ void main() {
     }
     water/=4;
     water*=1.; */
+    
+    float flux_total_over_dt = (flux.x + flux.y + flux.z + flux.w)/dt;
 
     float dh_l = height - (texture2DRect(heightmap, vec2(gl_FragCoord.x, gl_FragCoord.y)).r + texture2DRect(heightmap, vec2(gl_FragCoord.x, gl_FragCoord.y)).g);
     float f_l = max(0, flux.x + dt * (9.8 * dh_l));
