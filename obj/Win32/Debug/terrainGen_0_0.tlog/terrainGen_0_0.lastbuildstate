@@ -1,0 +1,2 @@
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v141:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0.19041.0
+Debug|Win32|D:\Projects\Burg\External_Libraries\Openframeworks-0.11.2_vs17\apps\myApps\terrainGen_0_0\|
