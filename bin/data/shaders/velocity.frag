@@ -39,6 +39,13 @@ void main() {
     vec2 velocity = texture2DRect(velmap, gl_FragCoord.xy).rg;
 
     /* velocity.x =  */
+    float dv_x = texture2DRect(flowmap, gl_FragCoord.xy + vec2(-1, 0)).z - texture2DRect(flowmap, gl_FragCoord.xy + vec2(0, 0)).x + texture2DRect(flowmap, gl_FragCoord.xy + vec2(0, 0)).z - texture2DRect(flowmap, gl_FragCoord.xy + vec2(+1, 0)).x;
+    dv_x/=2;
+    
+    float dv_y = texture2DRect(flowmap, gl_FragCoord.xy + vec2(0, -1)).W - texture2DRect(flowmap, gl_FragCoord.xy + vec2(0, 0)).y + texture2DRect(flowmap, gl_FragCoord.xy + vec2(0, 0)).w - texture2DRect(flowmap, gl_FragCoord.xy + vec2(0, 1)).y;
+    dv_y/=2;
+    
+    velocity = vec2(dv_x, dv_y);
 
-    outputColor = vec4(velocity, 0., 1.);
+    outputColor = vec4(velocity, texture2DRect(velmap, gl_FragCoord.zw).zw);
 }
